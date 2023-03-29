@@ -1,8 +1,5 @@
 'use strict'
 
-const input = [1, 5, 7, 9, 11]
-const target = 6
-
 const _sum = (arr) => arr.reduce((p, c) => p + c)
 
 const exchangeCoin = (coinList, target) => {
@@ -15,6 +12,9 @@ const exchangeCoin = (coinList, target) => {
   for (let i = 0; i < coins.length; i++) {
     // extract the first coin from the pool
     const [firstCoin, ...coinPool] = coins.slice(i)
+
+    // special case: the coin is the answer
+    if (firstCoin === target) return [1, [firstCoin]]
 
     // check for all subsets of the coin pool
     while (coinPool.length > 0) {
@@ -52,4 +52,11 @@ const exchangeCoin = (coinList, target) => {
   return -1
 }
 
-console.log(exchangeCoin(input, target))
+/**
+ * test cases
+ */
+const input = [1, 5, 7, 9, 11]
+
+for (let i = 1; i <= 33; i++) {
+  console.log(i, ' -> ', exchangeCoin(input, i))
+}
