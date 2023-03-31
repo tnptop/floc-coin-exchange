@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>FLOC Coin Exchange</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <style type="text/css">
+    body {
+      height: 100vh;
+    }
+
+    .container {
+      height: 100%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container d-flex align-items-center">
+    <div class="row justify-content-center gap-3">
+      <div class="row text-start">
+        <h1>FLOC Coin Exchange</h1>
+      </div>
+      <div class="row">
+        <div class="col text-start">
+          <label for="coin-list">List of coins (separated by comma)</label>
+        </div>
+        <input type="text" class="col" id="coin-list" placeholder="ex. 1,5,7,9,11" />
+      </div>
+      <div class="row">
+        <div class="col text-start">
+          <label for="target">Amount to be exchanged</label>
+        </div>
+        <input type="text" class="col" id="target" placeholder="ex. 25" />
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <button class="col" id="exchange" onclick="exchange()">Exchange</button>
+      </div>
+      <div class="row">
+        <div class="col text-start">
+          <label for="result">Result</label>
+        </div>
+        <input type="text" disabled class="col" id="result" placeholder="No. of coins" />
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    const exchange = () => {
+      const coinList = document.getElementById('coin-list').value.split(',').map(Number)
+      const target = Number(document.getElementById('target').value)
+      const result = exchangeCoin(coinList, target)
+
+      document.getElementById('result').value = result
+    }
+
+    const exchangeCoin = (coinList, target) => {
+      const coins = coinList.sort((a, b) => b - a)
+
+      for (let i = 0; i < coins.length; i++) {
+        const [firstCoin, ...coinPool] = coins.slice(i)
+        if (firstCoin === target) return [1, [firstCoin]]
+        while (coinPool.length > 0) {
+          const potentialCoins = [firstCoin]
+          for (const coin of coinPool) {
+            potentialCoins.push(coin)
+            const currentSum = potentialCoins.reduce((p, c) => p + c)
+            if (currentSum > target) {
+              potentialCoins.pop()
+            }
+            if (currentSum === target) {
+              return `${potentialCoins.length} (${potentialCoins})`
+            }
+          }
+          coinPool.shift()
+        }
+      }
+      return -1
+    }
+  </script>
+</body>
+
+</html>
