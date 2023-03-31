@@ -68,7 +68,7 @@
 
       for (let i = 0; i < coins.length; i++) {
         const [firstCoin, ...coinPool] = coins.slice(i)
-        if (firstCoin === target) return [1, [firstCoin]]
+        if (firstCoin === target) return `1 (${firstCoin})`
         while (coinPool.length > 0) {
           const potentialCoins = [firstCoin]
           for (const coin of coinPool) {
