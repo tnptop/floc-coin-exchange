@@ -1,0 +1,37 @@
+{
+  "name": "floc-coin-exchange",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.0.1",
+    "npm-watch": "^0.11.0",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.0"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ]
+    },
+    "extensions": "html"
+  },
+  "scripts": {
+    "watch": "npm-watch",
+    "build": "postcss tailwind.css -o src/styles.css",
+    "dev": "concurrently \"npm run build && live-server src --port 8080\" \"npm run watch\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnptop/floc-coin-exchange.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tnptop/floc-coin-exchange/issues"
+  },
+  "homepage": "https://github.com/tnptop/floc-coin-exchange#readme"
+}
